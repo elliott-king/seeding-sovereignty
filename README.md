@@ -6,24 +6,24 @@ If you are looking to replicate this outside of NYC, feel free to adapt this cod
 > [!NOTE]  
 > Most names used are case-sensitive, and expect the exact letters that I put in quotes.
 
-## What it does:
+## How this program interacts with the spreadsheet:
 Using the name of each bill you want, this will fetch information from the City Council Legistar API, and fill it into the corresponding row. If you want to show information about a bill, just include the bill name in the correct column. Upon running this, certain columns in the sheet will be automatically filled out. Note that all columns must exist in the sheet if you want this to work. You can, however, "hide" the column in Google sheets.
 
 <img width="538" height="370" alt="Screenshot 2025-08-21 at 9 58 57 PM" src="https://github.com/user-attachments/assets/edce46d7-9525-4f10-8855-53f816c7a5d9" />
 
 **Source column**
-"File #": the values in this column must be the file number of the bill (eg, "Int 0107-2024"). This is our source of truth, this is what I use to fetch information. If you want to get more bills, add their file number to this column.
+"File #": the values in this column must be the file number of the bill (eg, "Int 0107-2024"). This is our source of truth, this is what I use to fetch information. If you want to get include more bills in the sheet, add their file number to this column.
 
 **Target columns**: these columns will be updated with data when this program is run, and will overwrite all pre-existing data.
 - "Name": the bill's name. These can get pretty wordy.
 - "Prime Sponsor": the main council sponsor.
 - "Original Summary": the official summary of the bill. I use the term "original" here to indicate that this is auto-generated. If you want to write your own summary, make a different column.
 - "# Current Co-Sponsors": the number of city councilmembers sponsoring the bill. This is calculated by the program, so let me know if there is a bug.
-- "# Co-Sponsors Needed": this is just 26 - # Current Co-Sponsors
+- "# Co-Sponsors Needed": this is just 26
 - "Current Co-Sponsors": the names of the councilmembers sponsoring this bill. This is copied from the legistar & may have weird values like "(by request of the Brooklyn Borough President)" or something that was in the original data
 - "Bill History": this title is slightly misleading. This should be a list of bills from different years with the same name. If a bill rolls over to a new session, there doesn't seem to be a direct database relationship between the two versions of the bill, although they usually have the same name. You may want to double-check the contents here, and some bill duplicates may be omitted. If you find a newer bill, and want to add it to the GSheet, just copy the file number & add it to the "File #" column!
 
-## How to run it
+## How to run the program
 The provided MacOS app should run with a click.
 1. Double-click the application
    1. If Macos prevents it from running, you may have to right-click & run it using the menu that opens
@@ -71,7 +71,6 @@ values
 - [x] prime sponsor
 - [ ] additional information (?)
 - [ ] What are the edited/reference columns?
-
 
 # Actions
 chilli action (within app), per bill, per cc member
