@@ -1,5 +1,5 @@
 # Overview
-Welcome to the Seeding Sovereignty (Google) Sheets Script! This script will update the "NYC Climate Justice Bills (Seeding Sovereignty)" google sheet, in the "Introductions 2024" tab.
+Welcome to the Seeding Sovereignty (Google) Sheets Script! This script will update the "NYC Climate Justice Bills (Seeding Sovereignty)" google sheet, in the "Introductions 2024" tab. If you are looking to replicate this outside of NYC, feel free to adapt this code to your local government API.
 
 > [!NOTE]  
 > Most names used are case-sensitive, and expect the exact letters that I put in quotes.
