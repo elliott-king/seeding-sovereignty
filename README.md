@@ -1,5 +1,7 @@
 # Overview
-Welcome to the Seeding Sovereignty (Google) Sheets Script! This script will update the "NYC Climate Justice Bills (Seeding Sovereignty)" google sheet, in the "Introductions 2024" tab. If you are looking to replicate this outside of NYC, feel free to adapt this code to your local government API.
+Welcome to the Seeding Sovereignty (Google) Sheets Script! This script will update the "NYC Climate Justice Bills (Seeding Sovereignty)" google sheet, in the "Introductions 2024" tab.
+
+If you are looking to replicate this outside of NYC, feel free to adapt this code to your local government API. This will require some knowledge of programming and you will need to modify the `legistar.py` file to take input from whatever API you are using. You will also need to set up an app with Google Cloud Console. There is some notes how to set up GCloud below, but you will also need to do some research.
 
 > [!NOTE]  
 > Most names used are case-sensitive, and expect the exact letters that I put in quotes.
