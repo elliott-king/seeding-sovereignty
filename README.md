@@ -19,7 +19,7 @@ Using the name of each bill you want, this will fetch information from the City 
 - "Prime Sponsor": the main council sponsor.
 - "Original Summary": the official summary of the bill. I use the term "original" here to indicate that this is auto-generated. If you want to write your own summary, make a different column.
 - "# Current Co-Sponsors": the number of city councilmembers sponsoring the bill. This is calculated by the program, so let me know if there is a bug.
-- "# Co-Sponsors Needed": this is just 26
+- "# Co-Sponsors Needed": this is just 26 minus the number of Current Co-Sponsors
 - "Current Co-Sponsors": the names of the councilmembers sponsoring this bill. This is copied from the legistar & may have weird values like "(by request of the Brooklyn Borough President)" or something that was in the original data
 - "Bill History": this title is slightly misleading. This should be a list of bills from different years with the same name. If a bill rolls over to a new session, there doesn't seem to be a direct database relationship between the two versions of the bill, although they usually have the same name. You may want to double-check the contents here, and some bill duplicates may be omitted. If you find a newer bill, and want to add it to the GSheet, just copy the file number & add it to the "File #" column!
 
@@ -146,10 +146,18 @@ seeding-sovereignty/
 ```
 
 ### config.json
-TODO:
+Here is where the env vars are declared, don't bother with a `.env` file. Should look like:
+```json
+{
+  "NYC_COUNCIL_API_KEY": "",
+  "GOOGLE_CREDENTIALS_PATH": "",
+  "GOOGLE_TOKEN_PATH": "",
+  "GOOGLE_SPREADSHEET_ID": ""
+}
+```
 
 ### credentials.json
 
 ## License
 
-This project is licensed under the terms of the LICENSE file. 
+This project is licensed under the terms of the LICENSE file.
