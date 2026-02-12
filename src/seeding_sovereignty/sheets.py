@@ -11,9 +11,6 @@ from googleapiclient.discovery import build
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-SAMPLE_SPREADSHEET_ID = os.getenv("GOOGLE_SPREADSHEET_ID")
-SHEET_NAME = "Introductions 2024"
-
 FILE_COLUMN = "File #"  # main id used in legistar search
 NAME_COLUMN = "Name"
 PRIME_SPONSOR_COLUMN = "Prime Sponsor"
@@ -22,6 +19,10 @@ SPONSORS_COUNT_COLUMN = "# Current Co-Sponsors"
 REMAINING_COLUMN = "# Co-Sponsors Needed"
 SPONSORS_LIST_COLUMN = "Current Co-Sponsors"
 INFO_COLUMN = "Bill History"
+
+
+def build_sheet_name(year: str | int) -> str:
+    return f"Introductions {year}"
 
 
 def get_credentials() -> Credentials:
@@ -101,18 +102,17 @@ def get_column_ranges(service, spreadsheet_id: str, sheet_name: str) -> Dict[str
         except ValueError:
             errors.append(header)
             column_ranges[header] = None
+            continue
 
     if errors:
-        raise ValueError(f"Column header(s) not found: {errors}")
+        raise ValueError(f"Column header(s) not found in row 3: {errors}")
 
-    logging.info("column ranges:")
-    logging.info(column_ranges)
+    logging.debug("column ranges:")
+    logging.debug(column_ranges)
     return column_ranges
 
 
-def collect_filenos(
-    spreadsheet_id=SAMPLE_SPREADSHEET_ID, sheet_name=SHEET_NAME
-) -> List[str]:
+def collect_filenos(spreadsheet_id: str, year: str | int) -> List[str]:
     """Collect file numbers from the Google Sheet.
 
     Args:
@@ -126,6 +126,7 @@ def collect_filenos(
     service = build("sheets", "v4", credentials=creds)
 
     # Get column ranges
+    sheet_name = build_sheet_name(year)
     column_ranges = get_column_ranges(service, spreadsheet_id, sheet_name)
     file_range = column_ranges[FILE_COLUMN]
 
@@ -149,8 +150,8 @@ def collect_filenos(
 
 def upload_file_infos(
     matter_data: List[Dict[str, Any]],
-    spreadsheet_id: str = SAMPLE_SPREADSHEET_ID,
-    sheet_name: str = SHEET_NAME,
+    spreadsheet_id: str,
+    year: str,
 ) -> None:
     """Upload matter information to the Google Sheet.
 
@@ -161,6 +162,7 @@ def upload_file_infos(
     """
     creds = get_credentials()
     service = build("sheets", "v4", credentials=creds)
+    sheet_name = build_sheet_name(year)
 
     # Get column ranges
     column_ranges = get_column_ranges(service, spreadsheet_id, sheet_name)
@@ -226,7 +228,7 @@ def upload_file_infos(
             .execute()
         )
 
-        logging.info(
+        logging.debug(
             f"Successfully updated GSheet: {result.get('totalUpdatedCells')} cells across {len(updates)} columns."
         )
 

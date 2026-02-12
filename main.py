@@ -93,29 +93,52 @@ except ImportError as e:
     sys.exit(1)
 
 
-def main() -> None:
-    """Main function to update Google Sheet with Legistar data."""
-    try:
-        setup_logging()
+def update_loop(spreadsheet_id: str, year: str | int) -> None:
+    """Update the Google Sheet with Legistar data for a given year."""
 
+    try:
         # Get file names from Google Sheet
-        file_names = collect_filenos()
+        logging.info(f"starting update for year {year}...")
+        file_names = collect_filenos(spreadsheet_id, year)
         if not file_names:
-            logging.error("No file names found in the sheet.")
+            logging.error(f"No file names found in the sheet for year {year}.")
             return
 
         logging.info(f"Found {len(file_names)} file names in the sheet.")
-        logging.info(f"First few files: {', '.join(file_names[:5])} ...")
+        # logging.info(f"First few files: {', '.join(file_names[:5])} ...")
 
         # Get matter information from Legistar API
         matter_data = get_matter_info(file_names)
         if not matter_data:
-            logging.error("No matter data found from Legistar API.")
+            logging.error(f"No matter data found from Legistar API for year {year}.")
             return
 
-        logging.info("Uploading data to Google Sheets...")
+        logging.info(f"Uploading data to Google Sheets for year {year}...")
         # Upload matter names back to Google Sheet
-        upload_file_infos(matter_data)
+        upload_file_infos(matter_data, spreadsheet_id, year)
+        logging.info(f"Done with year {year}!")
+    except Exception as e:
+        logging.error(f"Error updating for year {year}: {e}")
+    finally:
+        logging.info("-" * 50)
+
+
+def main() -> None:
+    """Main function to update Google Sheet with Legistar data."""
+    try:
+        setup_logging()
+        logging.info("Starting main function...")
+        spreadsheet_id = os.getenv("GOOGLE_SPREADSHEET_ID")
+        if not spreadsheet_id:
+            logging.error("GOOGLE_SPREADSHEET_ID environment variable not set")
+            return
+
+        this_year = datetime.now().year
+        year_range = range(this_year - 2, this_year + 1)
+
+        for year in year_range:
+            update_loop(spreadsheet_id, year)
+
         logging.info("Done!")
         logging.info("You can close this window now.")
     except Exception as e:
