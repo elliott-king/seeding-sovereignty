@@ -26,12 +26,12 @@ Using the name of each bill you want, this will fetch information from the City 
 ## How to run the program
 The provided MacOS app should run with a click.
 1. Double-click the application
-   1. If Macos prevents it from running, you may have to right-click & run it using the menu that opens
+   - If MacOs prevents it from running, you may have to right-click & run it using the menu that opens
 2. No window will show, but you should see the app in the Mac dock at the bottom of your screen
 3. You may be prompted to login to Google.
    1. Make sure you use the email address that you email me with.
-   2. If it says "continue" vs "back to safety", be unsafe & hit "continue"
-4. Wait for the app to leave the dock, then check your Google sheet.
+   2. If it says "continue" vs "back to safety", be unsafe & hit "**continue**"
+4. **Wait** for the app to leave the dock, then check your Google sheet.
 
 ## <to organize: organization setup>
 - gcloud project
@@ -124,10 +124,11 @@ This is a simple python app that updates the Seeding Sovereignty bill spreadshee
 run with `poetry run python -m main`
 
 ### With py2app
-This script can be built into a Macos-native binary so it can be run with a single click:
+Make sure to update config.json - b/c that's what spreadsheet the user will be editing. This script can be built into a Macos-native binary so it can be run with a single click:
 ```bash
 ;rm -rf dist/ build/ && poetry run python setup.py py2app && cd dist && zip -r "Seeding Sovereignty.zip" "Seeding Sovereignty.app"
 ```
+This will create the binary in the `./dist` directory.
 
 ## Project Structure
 
